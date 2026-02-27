@@ -16,25 +16,42 @@
       </div>
       <div class="flex justify-center gap-2 mt-4">
          <button v-for="mood in defmoodList" :key="mood.emoji"
-            class="text-2xl hover:scale-125 transition-transform duration-200 hover:drop-shadow-lg" :title="mood.name"
+            class="text-2xl hover:scale-125 transition-transform duration-200 hover:drop-shadow-lg" :title="mood.emoname"
             @click="moodReaction = mood.id">
             {{ mood.emoji }}
          </button>
       </div>
    </div>
+
+   <MoodList :list="list" />
 </template>
 
 <script setup>
 import { defmoodList } from '@/data/list';
 import { ref, watchEffect } from 'vue';
+import MoodList from './MoodList.vue';
 
 const moodInput = ref('');
 const moodReaction = ref('');
+const list = ref([]);
 
 watchEffect(() => {
    console.log(moodInput.value)
    console.log(moodReaction.value)
 })
+
+function sendMood() {
+ const newMood = {
+      id: Date.now(),
+      emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || '❓',
+      emoname: moodInput.value || 'Unnamed Mood',
+      description: moodInput.value ? `Feeling ${moodInput.value.toLowerCase()}` : 'No description provided'
+   };
+
+   list.value.push(newMood);
+   moodInput.value = '';
+   moodReaction.value = '';
+}
 
 </script>
 

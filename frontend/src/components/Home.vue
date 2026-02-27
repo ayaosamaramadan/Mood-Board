@@ -1,7 +1,6 @@
 <script setup>
 import AppFooter from './Home/AppFooter.vue';
-import MoodList from './Home/MoodList.vue';
-import InputMood from './Home/InputMood.vue';
+import MoodSpace from './Home/MoodSpace.vue';
 import AppHeader from './Home/AppHeader.vue';
 
 </script>
@@ -10,8 +9,7 @@ import AppHeader from './Home/AppHeader.vue';
     <div class="min-h-screen flex flex-col bg-gradient-to-br from-pink-100 via-purple-50 to-pink-50">
         <AppHeader />
         <main class="flex-1 flex flex-col items-center px-4 py-8">
-            <InputMood />
-            <MoodList />
+            <MoodSpace/>
         </main>
         <AppFooter />
     </div>
