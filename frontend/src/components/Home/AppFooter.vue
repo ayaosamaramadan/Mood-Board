@@ -1,10 +1,22 @@
 <script setup>
-
 </script>
 
 <template>
-    <footer class=" text-white p-4 text-center">
-        &copy; 2026 Mood Board. All rights reserved.
+    <footer
+        class="bg-gradient-to-r from-pink-400 via-purple-400 to-pink-500 text-white py-6 px-4 text-center shadow-lg">
+        <div class="max-w-4xl mx-auto">
+
+            <p class="text-pink-100 text-sm">
+                &copy; 2026 Mood Board. All rights reserved. ✨
+            </p>
+            <div class="flex justify-center gap-4 mt-3">
+                <a href="#" class="text-white/80 hover:text-white transition-colors text-sm hover:underline">Privacy</a>
+                <span class="text-pink-200">•</span>
+                <a href="#" class="text-white/80 hover:text-white transition-colors text-sm hover:underline">Terms</a>
+                <span class="text-pink-200">•</span>
+                <a href="#" class="text-white/80 hover:text-white transition-colors text-sm hover:underline">Contact</a>
+            </div>
+        </div>
     </footer>
 </template>
 
