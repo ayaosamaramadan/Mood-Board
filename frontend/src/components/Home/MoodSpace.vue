@@ -8,9 +8,9 @@
       <div class="flex gap-3">
          <input v-model="moodInput" type="text" placeholder="Enter your mood..."
             class="flex-1 px-4 py-3 border-2 border-pink-200 rounded-2xl focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-100 transition-all duration-300 placeholder-pink-300 text-purple-700 bg-pink-50/50" />
-         <button
+         <button @click="sendMood"
             class="px-6 py-3 bg-gradient-to-r from-pink-400 to-purple-500 text-white font-semibold rounded-2xl shadow-cute hover:shadow-cute-lg hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2">
-            <span @click="sendMood">Add</span>
+            <span>{{ Addoredit }}</span>
             <span class="text-lg">✨</span>
          </button>
       </div>
@@ -23,34 +23,58 @@
       </div>
    </div>
 
-   <MoodList :list="list" />
+   <MoodList :list="list" @edit="handleEdit" />
 </template>
 
 <script setup>
 import { defmoodList } from '@/data/list';
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 import MoodList from './MoodList.vue';
 
 const moodInput = ref('');
 const moodReaction = ref('');
 const list = ref([]);
+const Addoredit = ref('Add');
+const editMoodId = ref(null);
 
-watchEffect(() => {
-   console.log(moodInput.value)
-   console.log(moodReaction.value)
-})
+// watchEffect(() => {
+//    console.log(moodInput.value)
+//    console.log(moodReaction.value)
+// })
 
 function sendMood() {
- const newMood = {
-      id: Date.now(),
-      emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || '❓',
-      emoname: moodInput.value || 'Unnamed Mood',
-      description: moodInput.value ? `Feeling ${moodInput.value.toLowerCase()}` : 'No description provided'
-   };
-
-   list.value.push(newMood);
+   if (Addoredit.value === 'Edit' && editMoodId.value !== null) {
+      const index = list.value.findIndex(m => m.id === editMoodId.value);
+      if (index !== -1) {
+         list.value[index] = {
+            ...list.value[index],
+            emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || list.value[index].emoji,
+            emoname: moodInput.value || 'Unnamed Mood',
+            description: moodInput.value ? `Feeling ${moodInput.value.toLowerCase()}` : 'No description provided'
+         };
+      }
+   } else {
+   const newMood = {
+         id: Date.now(),
+         emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || '❓',
+         emoname: moodInput.value || 'Unnamed Mood',
+         description: moodInput.value ? `Feeling ${moodInput.value.toLowerCase()}` : 'No description provided'
+      };
+      list.value.push(newMood);
+   }
+   
+ 
    moodInput.value = '';
    moodReaction.value = '';
+   Addoredit.value = 'Add';
+   editMoodId.value = null;
+}
+
+function handleEdit(mood) {
+   moodInput.value = mood.emoname;
+   moodReaction.value = defmoodList.find(m => m.emoji === mood.emoji)?.id || '';
+   Addoredit.value = 'Edit';
+   editMoodId.value = mood.id;
 }
 
 </script>

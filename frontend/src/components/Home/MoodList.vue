@@ -16,6 +16,9 @@
                             <p class="text-sm text-pink-400">{{ mood.description }}</p>
                         </div>
                     </div>
+                    <div @click="editMood(mood)" class="cursor-pointer text-pink-400 hover:text-purple-500 transition-colors duration-200">
+                        edit
+                    </div>
                     <div class="text-right">
                         <p class="text-xs text-purple-300">Today</p>
                         <p class="text-xs text-pink-300">2:30 PM</p>
@@ -33,6 +36,7 @@
 </template>
 
 <script setup>
+
 defineProps({
    list: {
       type: Array,
@@ -40,6 +44,11 @@ defineProps({
    }
 })
 
+ const emit = defineEmits(['edit']);
+function editMood(mood) {
+    // alert(`Editing mood: ${mood.emoname}`);
+   emit('edit', mood);
+}
 </script>
 
 <style lang="scss" scoped>
