@@ -5,6 +5,7 @@
             <h2 class="text-xl font-semibold text-purple-600">Your Mood History</h2>
         </div>
         
+       
        <div class="grid gap-4">
             <div class="group p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-cute transition-all duration-300 border border-pink-100 hover:border-pink-200 hover:-translate-y-1">
                 <div class="flex items-center justify-between">
