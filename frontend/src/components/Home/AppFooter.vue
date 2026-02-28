@@ -1,5 +1,5 @@
 <script setup>
-import { FiStar } from 'vue-icons-plus/fi';
+import { FiStar } from 'vue-icons-plus';
 </script>
 
 <template>

@@ -53,7 +53,7 @@
 import { defmoodList } from '@/data/list';
 import { ref } from 'vue';
 import MoodList from './MoodList.vue';
-import { FiMessageCircle,FiFeather, FiPlus } from 'vue-icons-plus/fi';
+import { FiMessageCircle, FiFeather, FiPlus } from 'vue-icons-plus';
 
 const moodInput = ref('');
 const moodReaction = ref('');

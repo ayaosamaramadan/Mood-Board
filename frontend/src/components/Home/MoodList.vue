@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { FiClipboard, FiFeather, FiStar, FiEdit2, FiTrash2 } from 'vue-icons-plus/fi';
+import { FiClipboard, FiFeather, FiStar, FiEdit2, FiTrash2 } from 'vue-icons-plus';
 
 defineProps({
    list: {
