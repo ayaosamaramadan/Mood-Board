@@ -5,10 +5,10 @@ import { FiStar } from 'vue-icons-plus/fi';
 <template>
     
     <footer
-        class="bg-gradient-to-r from-pink-400 via-purple-400 to-pink-500 text-white py-4 px-4 text-center shadow-lg">
+        class="bg-gradient-to-r from-pink-400 via-purple-400 to-pink-500 text-white py-4 px-4 text-center shadow-lg dark:from-purple-900 dark:via-pink-800 dark:to-gray-900">
         <div class="max-w-4xl mx-auto">
 
-            <p class="text-pink-100 text-sm flex items-center justify-center gap-1">
+            <p class="text-pink-100 text-sm flex items-center justify-center gap-1 dark:text-pink-200">
                 &copy; 2026 Mood Board. All rights reserved. <FiStar class="w-4 h-4 inline" />
             </p>
             <div class="flex justify-center gap-4 mt-3">
