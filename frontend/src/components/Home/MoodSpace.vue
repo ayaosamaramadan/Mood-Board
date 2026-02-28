@@ -20,13 +20,13 @@
 
             <div class="flex gap-4">
                <div class="flex-1 relative">
-                  <input v-model="moodInput" type="text" placeholder="Describe your mood..."
+                  <input v-model="moodStore.moodInput" type="text" placeholder="Describe your mood..."
                      class="w-full px-5 py-4 text-lg border-2 border-pink-200/70 rounded-2xl focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-100/50 transition-all duration-300 placeholder-pink-300/70 text-purple-700 bg-white/70 backdrop-blur-sm" />
                   <FiFeather class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-300/50" />
                </div>
-               <button @click="sendMood"
+               <button @click="moodStore.sendMood"
                   class="px-8 py-4 text-lg bg-gradient-to-r from-pink-400 via-pink-500 to-purple-500 text-white font-bold rounded-2xl shadow-cute hover:shadow-cute-lg hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 group">
-                  <span>{{ Addoredit }}</span>
+                  <span>{{ moodStore.Addoredit }}</span>
                   <FiPlus class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
                </button>
             </div>
@@ -36,8 +36,8 @@
                <div class="flex justify-center gap-3 flex-wrap">
                   <button v-for="mood in defmoodList" :key="mood.emoji"
                      class="text-3xl p-2 rounded-xl hover:scale-125 hover:bg-pink-100/50 transition-all duration-200 hover:drop-shadow-lg active:scale-95"
-                     :class="{ 'bg-purple-100 ring-2 ring-purple-300 scale-110': moodReaction === mood.id }"
-                     :title="mood.emoname" @click="moodReaction = mood.id">
+                     :class="{ 'bg-purple-100 ring-2 ring-purple-300 scale-110': moodStore.moodReaction === mood.id }"
+                     :title="mood.emoname" @click="moodStore.moodReaction = mood.id">
                      {{ mood.emoji }}
                   </button>
                </div>
@@ -45,61 +45,19 @@
          </div>
       </div>
 
-       <MoodList :list="list" @edit="handleEdit" @delete="handleDelete" />
+       <MoodList />
+        <!-- :list="moodStore.list" @edit="moodStore.handleEdit" @delete="moodStore.handleDelete"  -->
+      
    </div>
 </template>
 
 <script setup>
 import { defmoodList } from '@/data/list';
-import { ref } from 'vue';
 import MoodList from './MoodList.vue';
 import { FiMessageCircle, FiFeather, FiPlus } from 'vue-icons-plus/fi';
+import { useMoodStore } from '@/store/moodspace';
 
-const moodInput = ref('');
-const moodReaction = ref('');
-const list = ref([]);
-const Addoredit = ref('Add');
-const editMoodId = ref(null);
-
-function sendMood() {
-   if (Addoredit.value === 'Edit' && editMoodId.value !== null) {
-      const index = list.value.findIndex(m => m.id === editMoodId.value);
-      if (index !== -1) {
-         list.value[index] = {
-            ...list.value[index],
-            emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || list.value[index].emoji,
-            emoname: moodInput.value || 'Unnamed Mood',
-            description: moodInput.value ? `Feeling ${defmoodList.find(m => m.id === moodReaction.value)?.emoname || 'Unknown Mood'}` : 'No description provided'
-         };
-      }
-   } else {
-      const newMood = {
-         id: Date.now(),
-         emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || '❓',
-         emoname: moodInput.value || 'Unnamed Mood',
-         description: moodInput.value ? `Feeling ${defmoodList.find(m => m.id === moodReaction.value)?.emoname || 'Unknown Mood'}` : 'No description provided'
-      };
-      list.value.push(newMood);
-   }
-
-
-   moodInput.value = '';
-   moodReaction.value = '';
-   Addoredit.value = 'Add';
-   editMoodId.value = null;
-}
-
-function handleEdit(mood) {
-   moodInput.value = mood.emoname;
-   moodReaction.value = defmoodList.find(m => m.emoji === mood.emoji)?.id || '';
-   Addoredit.value = 'Edit';
-   editMoodId.value = mood.id;
-}
-
-function handleDelete(id) {
-   list.value = list.value.filter(m => m.id !== id);
-}
-
+const moodStore = useMoodStore();
 </script>
 
 <style lang="scss" scoped></style>

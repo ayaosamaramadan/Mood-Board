@@ -8,8 +8,8 @@
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Your Mood History</h2>
             </div>
             
-            <div v-if="list.length > 0" class="grid gap-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-purple-100/50">
-                <div v-for="mood in list" :key="mood.id" class="group p-4 bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-purple-100 hover:border-purple-200">
+            <div v-if="moodStore.list.length > 0" class="grid gap-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-purple-100/50">
+                <div v-for="mood in moodStore.list" :key="mood.id" class="group p-4 bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-purple-100 hover:border-purple-200">
                     <div class="flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3 flex-1 min-w-0">
                             <span class="text-3xl flex-shrink-0">{{ mood.emoji }}</span>
@@ -19,10 +19,10 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2 flex-shrink-0">
-                            <button @click="editMood(mood)" class="p-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-400 hover:text-purple-600 transition-all duration-200 hover:scale-110">
+                            <button @click="moodStore.handleEdit(mood)" class="p-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-400 hover:text-purple-600 transition-all duration-200 hover:scale-110">
                                 <FiEdit2 class="w-5 h-5" />
                             </button>
-                            <button @click="deleteMood(mood.id)" class="p-2 rounded-xl bg-pink-50 hover:bg-red-100 text-pink-400 hover:text-red-500 transition-all duration-200 hover:scale-110">
+                            <button @click="moodStore.handleDelete(mood.id)" class="p-2 rounded-xl bg-pink-50 hover:bg-red-100 text-pink-400 hover:text-red-500 transition-all duration-200 hover:scale-110">
                                 <FiTrash2 class="w-5 h-5" />
                             </button>
                         </div>
@@ -40,24 +40,26 @@
 </template>
 
 <script setup>
+import { useMoodStore } from '@/store/moodspace';
 import { FiClipboard, FiFeather, FiStar, FiEdit2, FiTrash2 } from 'vue-icons-plus/fi';
+const moodStore = useMoodStore();
 
-defineProps({
-   list: {
-      type: Array,
-      required: true
-   }
-})
+// defineProps({
+//    list: {
+//       type: Array,
+//       required: true
+//    }
+// })
 
-const emit = defineEmits(['edit', 'delete']);
+// const emit = defineEmits(['edit', 'delete']);
 
-function editMood(mood) {
-   emit('edit', mood);
-}
+// function editMood(mood) {
+//    emit('edit', mood);
+// }
 
-function deleteMood(id) {
-   emit('delete', id);
-}
+// function deleteMood(id) {
+//    emit('delete', id);
+// }
 </script>
 
 <style lang="scss" scoped>
