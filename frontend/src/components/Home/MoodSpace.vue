@@ -69,7 +69,7 @@ function sendMood() {
             ...list.value[index],
             emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || list.value[index].emoji,
             emoname: moodInput.value || 'Unnamed Mood',
-            description: moodInput.value ? `Feeling ${moodInput.value.toLowerCase()}` : 'No description provided'
+            description: moodInput.value ? `Feeling ${defmoodList.find(m => m.id === moodReaction.value)?.emoname || 'Unknown Mood'}` : 'No description provided'
          };
       }
    } else {
@@ -77,7 +77,7 @@ function sendMood() {
          id: Date.now(),
          emoji: defmoodList.find(m => m.id === moodReaction.value)?.emoji || '❓',
          emoname: moodInput.value || 'Unnamed Mood',
-         description: moodInput.value ? `Feeling ${moodInput.value.toLowerCase()}` : 'No description provided'
+         description: moodInput.value ? `Feeling ${defmoodList.find(m => m.id === moodReaction.value)?.emoname || 'Unknown Mood'}` : 'No description provided'
       };
       list.value.push(newMood);
    }
