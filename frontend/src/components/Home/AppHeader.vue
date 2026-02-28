@@ -8,7 +8,6 @@
             <h1 class="text-3xl font-bold tracking-wide drop-shadow-md">
                 Mood Board
             </h1>
-            
             <FiStar class="w-8 h-8 animate-bounce-slow text-pink-200" style="animation-delay: 0.5s" />
         </div>
         <p class="text-center text-pink-100 mt-2 text-sm font-medium dark:text-pink-200">Track your feelings, embrace

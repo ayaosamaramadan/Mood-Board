@@ -9,15 +9,16 @@
             </div>
             
             <div v-if="moodStore.list.length > 0" class="grid gap-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-purple-100/50">
-                <div v-for="mood in moodStore.list" :key="mood.id" class="group p-4 bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-purple-100 hover:border-purple-200 dark:bg-gray-800/70 dark:border-purple-800/30">
+                 <div v-for="mood in moodStore.list" :key="mood.id" class="group p-4 bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-purple-100 hover:border-purple-200 dark:bg-gray-800/70 dark:border-purple-800/30">
                     <div class="flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 flex-1 min-w-0">
+                      <router-link :to="`/selectedid/${mood.id}`">
+                 <div class="flex items-center gap-3 flex-1 min-w-0">
                             <span class="text-3xl flex-shrink-0">{{ mood.emoji }}</span>
                             <div class="min-w-0">
                                     <p class="font-semibold text-purple-700 text-base truncate dark:text-pink-100">{{ mood.emoname }}</p>
                                     <p class="text-sm text-pink-400 truncate dark:text-pink-200">{{ mood.description }}</p>
                             </div>
-                        </div>
+                        </div> </router-link>
                         <div class="flex items-center gap-2 flex-shrink-0">
                             <button @click="moodStore.handleEdit(mood)" class="p-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-400 hover:text-purple-600 transition-all duration-200 hover:scale-110 dark:bg-purple-900/10 dark:text-purple-200">
                                 <FiEdit2 class="w-5 h-5" />
@@ -27,7 +28,8 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> 
+               
             </div>
 
                 <div v-else class="text-center py-12">
