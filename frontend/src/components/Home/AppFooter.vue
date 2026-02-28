@@ -1,8 +1,9 @@
 <script setup>
-import { FiStar } from 'vue-icons-plus';
+import { FiStar } from 'vue-icons-plus/fi';
 </script>
 
 <template>
+    
     <footer
         class="bg-gradient-to-r from-pink-400 via-purple-400 to-pink-500 text-white py-4 px-4 text-center shadow-lg">
         <div class="max-w-4xl mx-auto">

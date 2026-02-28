@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { FiStar } from 'vue-icons-plus';
+import { FiStar } from 'vue-icons-plus/fi';
 </script>
 
 <style lang="scss" scoped>
