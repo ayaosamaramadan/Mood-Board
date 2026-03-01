@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { useMoodStore } from '@/store';
+import { useMoodStore } from '@/store/moodstats';
 import { FiClipboard, FiFeather, FiStar, FiEdit2, FiTrash2 } from 'vue-icons-plus/fi';
 const moodStore = useMoodStore();
 

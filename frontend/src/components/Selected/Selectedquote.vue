@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { useMoodStore } from '@/store';
+import { useMoodStore } from '@/store/moodstats';
 import { ref } from 'vue';
 
 import { useRoute } from 'vue-router'
