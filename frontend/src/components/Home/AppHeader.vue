@@ -1,4 +1,10 @@
 <template>
+    <ul>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/login">Login</router-link></li>
+        <li><router-link to="/signup">Sign Up</router-link></li>
+        <li v-if="isAuthenticated"><button @click="handleLogout">Logout</button></li>
+    </ul>
     <header
         class="bg-gradient-to-r from-pink-400 via-purple-400 to-pink-500 text-white p-6 shadow-cute-lg dark:from-purple-900 dark:via-pink-900 dark:to-gray-900">
 
@@ -18,6 +24,16 @@
 <script setup>
 import DarkModeToggle from '../ui/DarkModeToggle.vue';
 import { FiStar } from 'vue-icons-plus/fi';
+
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const isAuthenticated = computed(() => store.getters.isUserAuthenticated)
+const handleLogout = async () => {
+    await store.dispatch('logout')
+}
+
 </script>
 
 <style lang="scss" scoped></style>
