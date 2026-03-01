@@ -1,6 +1,5 @@
 <script setup>
 import AppFooter from './Home/AppFooter.vue';
-import MoodSpace from './Home/MoodSpace.vue';
 import AppHeader from './Home/AppHeader.vue';
 
 </script>
