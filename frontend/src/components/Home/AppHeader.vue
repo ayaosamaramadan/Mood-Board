@@ -13,10 +13,14 @@
 
             <div class="flex items-center gap-3">
                 <nav class="hidden sm:flex items-center gap-2" aria-label="Main navigation">
-                    <router-link to="/login" class="px-3 py-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">Login</router-link>
-                    <router-link to="/signup" class="px-3 py-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">Sign Up</router-link>
-                    <span v-if="user" class="px-3 py-2 text-sm font-medium truncate max-w-xs">{{ displayName }}</span>
-                    <button v-if="isAuthenticated" @click="handleLogout" class="px-3 py-2 rounded-md bg-white/20 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white">Logout</button>
+                    <template v-if="!isAuthenticated">
+                        <router-link to="/login" class="px-3 py-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">Login</router-link>
+                        <router-link to="/signup" class="px-3 py-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">Sign Up</router-link>
+                    </template>
+                    <template v-if="isAuthenticated">
+                        <span class="px-3 py-2 text-sm font-medium truncate max-w-xs">{{ displayName }}</span>
+                        <button @click="handleLogout" class="px-3 py-2 rounded-md bg-white/20 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white">Logout</button>
+                    </template>
                 </nav>
 
                 <DarkModeToggle />
@@ -24,10 +28,16 @@
         </div>
 
         <div class="sm:hidden px-4 pb-3">
-            <nav class="flex items-center justify-center gap-3" aria-label="Mobile navigation">
-                <router-link to="/" class="text-sm px-2 py-1 rounded-md">Home</router-link>
-                <router-link to="/login" class="text-sm px-2 py-1 rounded-md">Login</router-link>
-                <router-link to="/signup" class="text-sm px-2 py-1 rounded-md">Sign Up</router-link>
+            <nav class="flex items-center justify-center flex-wrap gap-3" aria-label="Mobile navigation">
+                <router-link to="/" class="text-sm px-2 py-1 rounded-md hover:bg-white/20">Home</router-link>
+                <template v-if="!isAuthenticated">
+                    <router-link to="/login" class="text-sm px-2 py-1 rounded-md hover:bg-white/20">Login</router-link>
+                    <router-link to="/signup" class="text-sm px-2 py-1 rounded-md hover:bg-white/20">Sign Up</router-link>
+                </template>
+                <template v-if="isAuthenticated">
+                    <span class="text-sm px-2 py-1 truncate max-w-[120px]">{{ displayName }}</span>
+                    <button @click="handleLogout" class="text-sm px-2 py-1 rounded-md bg-white/20 hover:bg-white/30">Logout</button>
+                </template>
             </nav>
         </div>
     </header>

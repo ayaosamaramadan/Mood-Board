@@ -1,5 +1,5 @@
 <template>
-   <div class=" w-full max-w-6xl flex gap-8 mt-4 items-start justify-center px-8">
+   <div class="w-full max-w-6xl flex flex-col lg:flex-row gap-8 mt-4 items-start justify-center px-4 sm:px-8">
       <div
          class="w-full max-w-lg p-8 bg-gradient-to-br from-white/90 to-pink-50/80 backdrop-blur-md rounded-[2rem] shadow-cute-lg border-2 border-pink-100/50 relative overflow-hidden dark:from-gray-800 dark:to-purple-900 dark:border-purple-800/40 dark:bg-gradient-to-br">
 
