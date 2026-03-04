@@ -54,12 +54,21 @@
 </template>
 
 <script setup>
+import { onMounted, onBeforeUnmount } from 'vue';
 import { defmoodList } from '@/data/list';
 import MoodList from './MoodList.vue';
 import { FiMessageCircle, FiFeather, FiPlus } from 'vue-icons-plus/fi';
 import { useMoodStore } from '@/store/moodstats';
 
 const moodStore = useMoodStore();
+
+onMounted(() => {
+   moodStore.startMoodsListener();
+});
+
+onBeforeUnmount(() => {
+   moodStore.stopMoodsListener();
+});
 </script>
 
 <style lang="scss" scoped></style>

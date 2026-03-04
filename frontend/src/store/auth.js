@@ -1,19 +1,8 @@
 import { createStore } from 'vuex'
 import router from '../router/router'
-import { initializeApp } from 'firebase/app'
-import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth'
-
-const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN
-}
-
-if (!firebaseConfig.apiKey || !firebaseConfig.authDomain) {
-    console.warn('Missing Firebase env vars: VITE_FIREBASE_API_KEY or VITE_FIREBASE_AUTH_DOMAIN')
-}
-
-const firebaseApp = initializeApp(firebaseConfig)
-const auth = getAuth(firebaseApp)
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../auth/services/firebase'
+import { useMoodStore } from '@/store/moodstats'
 
 const store = createStore({
     state: {
@@ -93,6 +82,13 @@ const store = createStore({
             await signOut(auth)
             commit('setToken', null)
             commit('setUser', null)
+            try {
+                const moodStore = useMoodStore()
+                moodStore.stopMoodsListener()
+                moodStore.list = []
+            } catch (e) {
+                // ignore if Pinia not ready
+            }
             router.push('/login')
         } },
     mutations: {
