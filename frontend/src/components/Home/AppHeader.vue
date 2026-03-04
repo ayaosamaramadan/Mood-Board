@@ -1,25 +1,51 @@
 <template>
-    <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/login">Login</router-link></li>
-        <li><router-link to="/signup">Sign Up</router-link></li>
-        <li v-if="isAuthenticated"><button @click="handleLogout">Logout</button></li>
-    </ul>
-    <header
-        class="bg-gradient-to-r from-pink-400 via-purple-400 to-pink-500 text-white p-6 shadow-cute-lg dark:from-purple-900 dark:via-pink-900 dark:to-gray-900">
+    <header class="bg-gradient-to-r from-pink-400 via-purple-400 to-pink-500 text-white dark:from-purple-900 dark:via-pink-900 dark:to-gray-900 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <FiStar class="w-8 h-8 text-yellow-200 animate-bounce-slow" aria-hidden="true" />
+                <router-link to="/">
+                    <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Mood Board</h1>
+                </router-link>
+                <FiStar class="w-8 h-8 text-pink-200 hidden md:inline-block animate-bounce-slow" style="animation-delay:0.5s" aria-hidden="true" />
+            </div>
 
-        <div class="max-w-4xl mx-auto flex items-center justify-center gap-3">
-            <DarkModeToggle />
-            <FiStar class="w-8 h-8 animate-bounce-slow text-yellow-200" />
-            <h1 class="text-3xl font-bold tracking-wide drop-shadow-md">
-                Mood Board
-            </h1>
-            <FiStar class="w-8 h-8 animate-bounce-slow text-pink-200" style="animation-delay: 0.5s" />
+            <p class="hidden md:block text-sm text-pink-50 dark:text-pink-200">Track your feelings — embrace your emotions</p>
+
+            <div class="flex items-center gap-3">
+                <nav class="hidden sm:flex items-center gap-2" aria-label="Main navigation">
+                    <router-link to="/login" class="px-3 py-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">Login</router-link>
+                    <router-link to="/signup" class="px-3 py-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">Sign Up</router-link>
+                    <span v-if="user" class="px-3 py-2 text-sm font-medium truncate max-w-xs">{{ displayName }}</span>
+                    <button v-if="isAuthenticated" @click="handleLogout" class="px-3 py-2 rounded-md bg-white/20 hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white">Logout</button>
+                </nav>
+
+                <DarkModeToggle />
+            </div>
         </div>
-        <p class="text-center text-pink-100 mt-2 text-sm font-medium dark:text-pink-200">Track your feelings, embrace
-            your emotions</p>
+
+        <div class="sm:hidden px-4 pb-3">
+            <nav class="flex items-center justify-center gap-3" aria-label="Mobile navigation">
+                <router-link to="/" class="text-sm px-2 py-1 rounded-md">Home</router-link>
+                <router-link to="/login" class="text-sm px-2 py-1 rounded-md">Login</router-link>
+                <router-link to="/signup" class="text-sm px-2 py-1 rounded-md">Sign Up</router-link>
+            </nav>
+        </div>
     </header>
 </template>
+
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+    computed: {
+        ...mapState(['user']),
+        displayName() {
+            if (!this.user) return ''
+            return this.user.displayName || this.user.email || 'User'
+        }
+    }}
+</script>
 
 <script setup>
 import DarkModeToggle from '../ui/DarkModeToggle.vue';
