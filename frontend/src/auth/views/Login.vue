@@ -67,6 +67,21 @@ export default {
     }
   },
   methods: {
+    getFirebaseError(code) {
+      const messages = {
+        'auth/user-not-found': 'No account found with this email.',
+        'auth/wrong-password': 'Incorrect password. Please try again.',
+        'auth/invalid-email': 'Invalid email address.',
+        'auth/invalid-credential': 'Incorrect email or password.',
+        'auth/user-disabled': 'This account has been disabled.',
+        'auth/too-many-requests': 'Too many failed attempts. Please try again later.',
+        'auth/network-request-failed': 'Network error. Check your connection.',
+        'auth/popup-closed-by-user': 'Sign-in window was closed. Please try again.',
+        'auth/cancelled-popup-request': 'Sign-in was cancelled.',
+        'auth/account-exists-with-different-credential': 'An account already exists with a different sign-in method.'
+      }
+      return messages[code] || 'Something went wrong. Please try again.'
+    },
     async login() {
       this.error = null
       try {
@@ -76,7 +91,7 @@ export default {
         })
         this.$router.push('/')
       } catch (err) {
-        this.error = err.code ? `${err.code}: ${err.message}` : err.message || String(err)
+        this.error = this.getFirebaseError(err.code)
       }
     },
     async googleSignIn() {
@@ -87,7 +102,7 @@ export default {
         await this.$store.dispatch('loginWithProvider', user)
         this.$router.push('/')
       } catch (err) {
-        this.error = err.code ? `${err.code}: ${err.message}` : err.message || String(err)
+        this.error = this.getFirebaseError(err.code)
       }
     },
     async githubSignIn() {
@@ -98,7 +113,7 @@ export default {
         await this.$store.dispatch('loginWithProvider', user)
         this.$router.push('/')
       } catch (err) {
-        this.error = err.code ? `${err.code}: ${err.message}` : err.message || String(err)
+        this.error = this.getFirebaseError(err.code)
       }
     }
   }

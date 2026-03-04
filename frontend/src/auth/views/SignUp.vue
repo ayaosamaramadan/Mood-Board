@@ -66,6 +66,20 @@ export default {
     }
   },
   methods: {
+    getFirebaseError(code) {
+      const messages = {
+        'auth/email-already-in-use': 'This email is already registered. Try logging in.',
+        'auth/invalid-email': 'Invalid email address.',
+        'auth/weak-password': 'Password must be at least 6 characters.',
+        'auth/operation-not-allowed': 'Sign-up is currently disabled.',
+        'auth/too-many-requests': 'Too many attempts. Please try again later.',
+        'auth/network-request-failed': 'Network error. Check your connection.',
+        'auth/popup-closed-by-user': 'Sign-up window was closed. Please try again.',
+        'auth/cancelled-popup-request': 'Sign-up was cancelled.',
+        'auth/account-exists-with-different-credential': 'An account already exists with a different sign-in method.'
+      }
+      return messages[code] || 'Something went wrong. Please try again.'
+    },
     async signup() {
       this.error = null
       try {
@@ -75,10 +89,9 @@ export default {
         })
         this.$router.push('/')
       } catch (err) {
-        this.error = err.code ? `${err.code}: ${err.message}` : err.message || String(err)
+        this.error = this.getFirebaseError(err.code)
       }
-    }
-    ,
+    },
     async googleSignUp() {
       this.error = null
       try {
@@ -87,7 +100,7 @@ export default {
         await this.$store.dispatch('loginWithProvider', user)
         this.$router.push('/')
       } catch (err) {
-        this.error = err.code ? `${err.code}: ${err.message}` : err.message || String(err)
+        this.error = this.getFirebaseError(err.code)
       }
     },
     async githubSignUp() {
@@ -98,10 +111,10 @@ export default {
         await this.$store.dispatch('loginWithProvider', user)
         this.$router.push('/')
       } catch (err) {
-        this.error = err.code ? `${err.code}: ${err.message}` : err.message || String(err)
+        this.error = this.getFirebaseError(err.code)
       }
     }
-  } 
+  }
 }
 </script>
 
