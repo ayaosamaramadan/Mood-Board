@@ -7,35 +7,34 @@ import MoodSpace from '@/components/Home/MoodSpace.vue'
 import Selectedquote from '@/components/Selected/Selectedquote.vue'
 
 const routes = [
- 
-  { path: '/login', name: 'Login', component: Login },
-  { path: '/signup', name: 'SignUp', component: SignUp },
+
+    { path: '/login', name: 'Login', component: Login },
+    { path: '/signup', name: 'SignUp', component: SignUp },
     {
-          path: '/',
-          name: 'Home',
-          component: MoodSpace
-      },
-      {
-          path: '/selectedid/:id',
-          name: 'Selectedque',
-          component: Selectedquote
-      }
+        path: '/',
+        name: 'Home',
+        component: MoodSpace,
+
+    },
+    {
+        path: '/selectedid/:id',
+        name: 'Selectedque',
+        component: Selectedquote
+    }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 })
 
 router.beforeEach((to, from, next) => {
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     const isUserAuthenticated = store.getters.isUserAuthenticated
-
-    if (requiresAuth && !isUserAuthenticated) {
-        next('/login')
-    } else {
-        next()
+    const publicPaths = ['/login', '/signup']
+    if (!isUserAuthenticated && !publicPaths.includes(to.path)) {
+        return next({ path: '/login', query: { redirect: to.fullPath } })
     }
+    next()
 })
 
 export default router
